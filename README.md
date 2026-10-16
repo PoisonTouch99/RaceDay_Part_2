@@ -4,12 +4,10 @@ RaceDay is a system for planning and running race-day events — road races, fun
 
 This repository contains **Part 1** (planning and database design, in `/docs`) and **Part 2** (the ASP.NET Core Web API, in `/src` and `/tests`).
 
-## Roles
+## Role and Capabilities
 
-| Role | Capabilities |
-|---|---|
-| **Organiser** | Create, update and delete their own events (name, description, date, location, distance, type). Define age categories (Under 20, Senior) and distance categories (10km, 21km) for those events. View all enrolments for their events. Capture and correct finish times and finishing positions. |
-| **Participant** | Browse published events and their categories. Enter an event by selecting a category, receiving a bib number. View and cancel their own enrolments. View their own results and public leaderboards. |
+**Organiser** - Create, update and delete their own events (name, description, date, location, distance, type). Define age categories (Under 20, Senior) and distance categories (10km, 21km) for those events. View all enrolments for their events. Capture and correct finish times and finishing positions. |
+**Participant** - Browse published events and their categories. Enter an event by selecting a category, receiving a bib number. View and cancel their own enrolments. View their own results and public leaderboards. |
 
 Role is chosen at registration and drives every protected endpoint. An Organiser cannot enrol; a Participant cannot manage events. Organisers are further restricted to **their own** events — attempting to modify another Organiser's event returns 403.
 
