@@ -18,12 +18,12 @@ Role is chosen at registration and drives every protected endpoint. An Organiser
 
 Here are all the login accounts that a user can use to test the application _(All seeded accounts use the password **`Passw0rd!`**)_
 
-| Email | Role |
-|---|---|
-| sarah.nkosi@raceday.co.za | Organiser |
-| david.botha@raceday.co.za | Organiser |
-| thabo.mokoena@example.com | Participant |
-| emma.vanwyk@example.com | Participant |
+Emails of users:
+
+* sarah.nkosi@raceday.co.za
+* david.botha@raceday.co.za
+* thabo.mokoena@example.com
+* emma.vanwyk@example.com 
 
 ## Swagger
 * I have added a code that will automatically take a user straight to the website when they run the application
