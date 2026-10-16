@@ -17,46 +17,9 @@ Role is chosen at registration and drives every protected endpoint. An Organiser
 
 ## Prerequisites
 
-- **.NET 8 SDK** ([download](https://dotnet.microsoft.com/download))
 - **Visual Studio 2022** (17.8+) or VS Code with the C# extension
 - **SQL Server** — LocalDB (ships with Visual Studio), Express, or full SQL Server
 - **SQL Server Management Studio (SSMS)** — only needed to run the Part 1 script directly
-
-## Setup and run
-
-**1. Clone the repository**
-```bash
-git clone https://github.com/<your-username>/raceday.git
-cd raceday
-```
-
-**2. Check the connection string**
-
-`src/RaceDay.Api/appsettings.json` defaults to LocalDB:
-```
-Server=(localdb)\MSSQLLocalDB;Database=RaceDayDB;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True
-```
-Change `Server=` if you are using SQL Server Express (`.\SQLEXPRESS`) or a named instance.
-
-**3. Create the EF Core migration**
-
-The repository does not include a generated migration, so create one on first setup:
-```bash
-dotnet tool install --global dotnet-ef        # once per machine
-cd src/RaceDay.Api
-dotnet ef migrations add InitialCreate
-```
-In Visual Studio's Package Manager Console the equivalent is `Add-Migration InitialCreate`.
-
-**4. Run the API**
-```bash
-dotnet run --project src/RaceDay.Api
-```
-On startup the app applies migrations and seeds sample data automatically — 2 Organisers, 2 Participants, 3 events, 7 categories, 4 enrolments, a result and payments. Seeding only runs when the database is empty.
-
-**5. Open Swagger**
-
-Browse to `https://localhost:<port>/swagger`. The port is printed in the console.
 
 ## Sample logins
 
@@ -69,6 +32,8 @@ All seeded accounts use the password **`Passw0rd!`**
 | thabo.mokoena@example.com | Participant |
 | emma.vanwyk@example.com | Participant |
 
+## Swagger
+* I have added a code that will automatically take a user straight to the website when they run the application
 ## Testing the API through Swagger
 
 Authentication is **session based**, so there is no token to paste:
@@ -88,31 +53,6 @@ dotnet test
 
 The suite covers registration and login (including password hashing and duplicate emails), role enforcement for both roles in both directions, event management with ownership checks, enrolment recording with duplicate and capacity conflicts, and result capture with leaderboard ranking. Tests use the EF Core InMemory provider and a fake `ISession`, so no database or running server is required.
 
-## Project structure
-
-```
-src/RaceDay.Api
-  Models/          EF Core entities (Code-First)
-  Data/            DbContext and seed data
-  DTOs/            Request and response shapes; keeps password hashes out of responses
-  Controllers/     Auth, Users, Events, Categories, Enrolments, Results
-  Services/        PBKDF2 password hashing
-  Authorization/   [SessionAuthorize] filter and session helpers
-  Program.cs       DI, session config, Swagger, migration + seeding
-tests/RaceDay.Tests
-  AuthTests.cs               registration, login, hashing, logout
-  RoleAccessTests.cs         401/403 enforcement for both roles
-  EventManagementTests.cs    Organiser CRUD and ownership
-  EnrolmentTests.cs          enrolment recording, conflicts, visibility
-  ResultsTests.cs            result capture and leaderboard ranking
-  Helpers/                   FakeSession and shared test setup
-docs
-  RaceDay_ERD.png            Entity Relationship Diagram
-  API_Endpoint_Plan.md       Endpoint specification + deviations table
-  RaceDay_Schema.sql         SQL Server schema and seed script
-.github/workflows
-  build-and-test.yml         Builds, tests, and validates repo structure
-```
 
 ## Security notes
 
