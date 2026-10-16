@@ -2,7 +2,6 @@
 
 RaceDay is a system for planning and running race-day events — road races, fun walks and cycle races. **Organisers** create events, define age and distance categories, and capture results afterwards. **Participants** browse published events, enter by selecting a category, and view their own results.
 
-This repository contains **Part 1** (planning and database design, in `/docs`) and **Part 2** (the ASP.NET Core Web API, in `/src` and `/tests`).
 
 ## Role and Capabilities
 
