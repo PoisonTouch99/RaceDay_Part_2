@@ -135,7 +135,7 @@ Changes made to the original Part 1 design — and why — are documented in the
 
 **Build screenshot:**
 
-![Screenshot of a working CI workflow in green](Screenshot of a CI workflow.png)
+![Screenshot of a working CI workflow in green](Screenshot.png)
 
 ## Video walkthrough
 
