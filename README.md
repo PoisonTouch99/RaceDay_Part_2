@@ -25,8 +25,11 @@ Emails of users:
 * thabo.mokoena@example.com
 * emma.vanwyk@example.com 
 
+
 ## Swagger
 * I have added a code that will automatically take a user straight to the website when they run the application
+
+
 ## Testing the API through Swagger
 
 Authentication is **session based**, so there is no token to paste:
@@ -37,12 +40,6 @@ Authentication is **session based**, so there is no token to paste:
 4. Call `POST /api/auth/logout` to clear the session, or log in as a different user to switch roles.
 
 To see role enforcement: log in as a Participant and call `POST /api/events` — it returns **403**. Log out entirely and call it again — it returns **401**.
-
-## Running the tests
-
-```bash
-dotnet test
-```
 
 The suite covers registration and login (including password hashing and duplicate emails), role enforcement for both roles in both directions, event management with ownership checks, enrolment recording with duplicate and capacity conflicts, and result capture with leaderboard ranking. Tests use the EF Core InMemory provider and a fake `ISession`, so no database or running server is required.
 
