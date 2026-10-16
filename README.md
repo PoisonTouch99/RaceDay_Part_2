@@ -13,15 +13,10 @@ Role is chosen at registration and drives every protected endpoint. An Organiser
 
 ---
 
-## Prerequisites
-
-- **Visual Studio 2022** (17.8+) or VS Code with the C# extension
-- **SQL Server** — LocalDB (ships with Visual Studio), Express, or full SQL Server
-- **SQL Server Management Studio (SSMS)** — only needed to run the Part 1 script directly
 
 ## Sample logins
 
-All seeded accounts use the password **`Passw0rd!`**
+Here are all the login accounts that a user can use to test the application _(All seeded accounts use the password **`Passw0rd!`**)_
 
 | Email | Role |
 |---|---|
