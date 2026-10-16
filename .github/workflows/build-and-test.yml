@@ -1,0 +1,57 @@
+name: Build and Test
+
+# Builds the solution and runs every unit test on each push and pull request.
+on:
+  push:
+    branches: [ "**" ]
+  pull_request:
+    branches: [ "**" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore RaceDay.sln
+
+      - name: Build (Release, warnings not suppressed)
+        run: dotnet build RaceDay.sln --configuration Release --no-restore
+
+      - name: Run unit tests
+        run: dotnet test RaceDay.sln --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test-results.trx"
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: '**/test-results.trx'
+          if-no-files-found: ignore
+
+  validate-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check required Part 1 documents are present
+        run: |
+          fail=0
+          [ -d "docs" ] || { echo "::error::Missing /docs folder."; fail=1; }
+          ls docs/*.png docs/*.pdf 2>/dev/null | grep -qi "erd" || { echo "::error::No ERD file in /docs."; fail=1; }
+          ls docs/*.md docs/*.pdf 2>/dev/null | grep -qi "endpoint" || { echo "::error::No endpoint plan in /docs."; fail=1; }
+          ls docs/*.sql >/dev/null 2>&1 || { echo "::error::No .sql script in /docs."; fail=1; }
+          [ -f "README.md" ] || { echo "::error::Missing README.md."; fail=1; }
+          exit $fail
+
+      - name: Summary
+        run: echo "Repository structure validated. ✅"
